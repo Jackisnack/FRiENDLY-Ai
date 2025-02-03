@@ -67,11 +67,4 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-echo 🔎 Checking for Vosk model...
-if not exist "vosk-model-small-en-us-0.15" (
-    echo ⚠️ Vosk model directory not found! Please download and place it inside the project folder.
-) else (
-    echo ✅ Vosk model found.
-)
-
 echo 🎉 Installation complete! Run the program with: run.bat
