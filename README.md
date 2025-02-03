@@ -14,9 +14,11 @@ Welcome to FRiENDLY-Ai! A general-purpose chatbot.
 
 1. Open a terminal.
 2. Run the following commands:
+   ```bash
    chmod +x install.sh run.sh  # Make them executable
    ./install.sh  # Install dependencies
    ./run.sh  # Run the app
+   ```
 
 ## Windows Install:
 
