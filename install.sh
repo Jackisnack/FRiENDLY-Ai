@@ -59,13 +59,5 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Check for Vosk model
-echo "🔎 Checking for Vosk model..."
-if [ ! -d "vosk-model-small-en-us-0.15" ]; then
-    echo "⚠️ Vosk model directory not found! Please download and place it inside the project folder."
-else
-    echo "✅ Vosk model found."
-fi
-
 echo "🎉 Installation complete! Run the program with: ./run.sh"
 echo "To activate the virtual environment, run: source venv/bin/activate"
