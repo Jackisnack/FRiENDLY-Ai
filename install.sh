@@ -20,10 +20,27 @@ echo "📦 Installing dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
-echo "🧠 Setting up NLTK data..."
-export NLTK_DATA="$(pwd)/nltk_data"
-mkdir -p "$NLTK_DATA"
-python -c "import nltk; nltk.data.path.append('$NLTK_DATA'); nltk.download('punkt')"
+# Download the Vosk model
+echo "Fetching vosk model..."
+cd /Users/jacktoth-egeto/Downloads && { 
+  curl -L -o vosk-model-small-en-us-0.15_c_.zip https://huggingface.co/ambind/vosk-model-small-en-us-0.15/resolve/main/vosk-model-small-en-us-0.15_c_.zip 
+  if [ $? -eq 0 ]; then
+    echo "Download successful."
+    unzip vosk-model-small-en-us-0.15_c_.zip
+    rm vosk-model-small-en-us-0.15_c_.zip
+  else
+    echo "Download failed."
+  fi
+}
+
+# Download NLTK
+echo "📥 Checking for existing NLTK data..."
+if [ ! -d "$NLTK_DATA" ]; then
+    echo "📥 Downloading NLTK data..."
+    python -c "import nltk; nltk.download('punkt', download_dir='$NLTK_DATA')"
+else
+    echo "✅ NLTK data already exists. Skipping download."
+fi
 
 # Install meloTTS
 MELO_REPO="https://github.com/myshell-ai/meloTTS.git"
