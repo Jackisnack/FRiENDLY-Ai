@@ -18,11 +18,11 @@ import time
 import threading
 
 # Look for vosk model
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "FRiENDLY-Ai", "vosk-model-small-en-us-0.15")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "vosk-model-small-en-us-0.15")
 model = Model(MODEL_PATH)
 
 # Look for nltk_data
-nltk_data_path = os.path.join(os.path.dirname(__file__), "FRiENDLY-Ai", "nltk_data")
+nltk_data_path = os.path.join(os.path.dirname(__file__), "nltk_data")
 nltk.data.path.append(nltk_data_path)
 
 # Initialize the LLM and memory
