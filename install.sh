@@ -16,26 +16,40 @@ fi
 
 source venv/bin/activate
 
-echo "📦 Installing dependencies..."
-pip install --upgrade pip
-pip install -r requirements.txt
+# Function to install Python packages with error handling
+install_python_packages() {
+    echo "📦 Installing Python packages from requirements.txt..."
+    while IFS= read -r package; do
+        echo "📥 Installing $package..."
+        pip install "$package"
+        if [ $? -ne 0 ]; then
+            echo "❌ Failed to install $package. Please check the error messages above."
+            # Optionally, you can exit the script or continue with the next package
+            # exit 1
+        else
+            echo "✅ Successfully installed $package."
+        fi
+    done < requirements.txt
+}
+
+# Call the function to install packages
+install_python_packages
 
 # Download the Vosk model
 echo "Fetching vosk model..."
-cd /Users/jacktoth-egeto/Downloads && { 
-  curl -L -o vosk-model-small-en-us-0.15_c_.zip https://huggingface.co/ambind/vosk-model-small-en-us-0.15/resolve/main/vosk-model-small-en-us-0.15_c_.zip 
-  if [ $? -eq 0 ]; then
-    echo "Download successful."
-    unzip vosk-model-small-en-us-0.15_c_.zip
-    rm vosk-model-small-en-us-0.15_c_.zip
-  else
-    echo "Download failed."
-  fi
-}
+curl -L -o vosk-model-small-en-us-0.15_c_.zip https://huggingface.co/ambind/vosk-model-small-en-us-0.15/resolve/main/vosk-model-small-en-us-0.15_c_.zip 
+if [ $? -eq 0 ]; then
+  echo "Download successful."
+  unzip vosk-model-small-en-us-0.15_c_.zip
+  rm vosk-model-small-en-us-0.15_c_.zip
+else
+  echo "Download failed."
+fi
 
 # Download NLTK
 echo "📥 Checking for existing NLTK data..."
 if [ ! -d "$NLTK_DATA" ]; then
+    pip install nltk
     echo "📥 Downloading NLTK data..."
     python -c "import nltk; nltk.download('punkt', download_dir='$NLTK_DATA')"
 else
